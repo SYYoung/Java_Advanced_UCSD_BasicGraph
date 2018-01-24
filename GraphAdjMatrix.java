@@ -104,10 +104,42 @@ public class GraphAdjMatrix extends Graph {
 	 * @return List<Integer> a list of indices of vertices.  
 	 */	
 	public List<Integer> getDistance2(int v) {
-		// XXX Implement this method in week 2
-		return null;
+		// by implementation in matrix multiplication
+		int[][] twoHopArr = new int[getNumVertices()][getNumVertices()];
+		for (int a=0; a<getNumVertices(); a++) {
+			for (int b=0; b<getNumVertices(); b++) {
+				for (int k=0; k<getNumVertices(); k++) {
+					twoHopArr[a][b] += adjMatrix[a][k] * adjMatrix[k][b];
+				}
+			}
+		}
+		//adjacencyStr2(twoHopArr);
+		// now get the neighbor of twoHop
+		ArrayList<Integer> twoHop = new ArrayList<Integer>();
+		for (int k=0; k<getNumVertices(); k++) {
+			for (int j=0; j<twoHopArr[v][k]; j++) {
+				twoHop.add(k);
+			}
+		}
+		
+		return twoHop;
 	}
 	
+	private void adjacencyStr2(int[][] mat) {
+		// TODO Auto-generated method stub
+		int dim = getNumVertices();
+		String s = "another matrix";
+		s += " (size " + dim + "x" + dim + " = " + dim* dim + " integers):";
+		for (int i = 0; i < dim; i ++) {
+			s += "\n\t"+i+": ";
+			for (int j = 0; j < dim; j++) {
+			s += mat[i][j] + ", ";
+			}
+		}
+		System.out.println(s);
+	}		
+	
+
 	/**
 	 * Generate string representation of adjacency matrix
 	 * @return the String
